@@ -1,0 +1,124 @@
+<html>  
+   <body>
+      <?php
+         
+         $nameErr = $emailErr = $genderErr = $taxErr = $annualErr = "";
+         $name = $email = $gender = $tax = $annual = "";
+         
+         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (empty($_POST["name"])) {
+               $nameErr = "Name is required";
+            }else {
+               $name = test_input($_POST["name"]);
+            }
+            
+            if (empty($_POST["email"])) {
+               $emailErr = "Email is required";
+            }else {
+               $email = test_input($_POST["email"]);
+               
+               
+               if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                  $emailErr = "Invalid email format"; 
+               }
+            }
+            
+            if (empty($_POST["tax"])) {
+               $taxErr = "Tax is required";
+            }else {
+               $tax = test_input($_POST["tax"]);
+            }
+            
+            if (empty($_POST["annual"])) {
+               $annualErr = "Annualprofit is required";
+            }else {
+               $annual = test_input($_POST["annual"]);
+            }
+            
+            if (empty($_POST["gender"])) {
+               $genderErr = "Gender is required";
+            }else {
+               $gender = test_input($_POST["gender"]);
+            }
+         }
+         
+         function test_input($data) {
+            $data = trim($data);
+            $data = stripslashes($data);
+            $data = htmlspecialchars($data);
+            return $data;
+         }
+      ?>
+     
+      <h2>online stock management system</h2>
+     
+      <p><span class = "error">* required field.</span></p>
+     
+      <form method = "post" action = "<?php 
+         echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+         <table>
+            <tr>
+               <td>Name:</td>
+               <td><input type = "text" name = "name">
+                  <span class = "error">* <?php echo $nameErr;?></span>
+               </td>
+            </tr>
+           
+            <tr>
+               <td>E-mail: </td>
+               <td><input type = "text" name = "email">
+                  <span class = "error">* <?php echo $emailErr;?></span>
+               </td>
+            </tr>
+           
+            <tr>
+               <td>Tax paid:</td>
+               <td> <input type = "text" name = "tax">
+                  <span class = "error">* <?php echo $taxErr;?></span>
+               </td>
+            </tr>
+            
+            <tr>
+               <td>Annual Profit:</td>
+               <td> <input type = "text" name = "annual">
+		<span class = "error">* <?php echo $annualErr;?></span>
+		</td>
+            </tr>
+            
+            <tr>
+               <td>Gender:</td>
+               <td>
+                  <input type = "radio" name = "gender" value = "female">Female
+                  <input type = "radio" name = "gender" value = "male">Male
+                  <span class = "error">* <?php echo $genderErr;?></span>
+               </td>
+            </tr>
+				
+            <td>
+               <input type = "submit" name = "submit" value = "Submit"> 
+            </td>
+				
+         </table>
+			
+      </form>
+      
+      <?php
+         echo "<h3>values are:</h3>";
+         echo $name;
+         echo "<br>";
+         
+         echo $email;
+         echo "<br>";
+         
+         echo $tax;
+         echo "<br>";
+         
+         echo $annual;
+         echo "<br>";
+         
+         echo $gender;
+      ?>
+   
+   </body>
+</html>
+
